@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Repository.Models.Reservation>
+
+@{
+    ViewData["Title"] = "Reservations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string q = ViewData["q"] == null ? "" : ViewData["q"] as string;
+    string? error = ViewData["error"] as string;
+}
+
+<h1>Reservations</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
+</p>
+<p style="color:red">
+    @error
+</p>
+<!--TODO: from-to filter -->
+@* <div class="row">
+    <div class="col-md-4">
+        <span>Search: </span>
+        <form method="get" asp-action="Index">
+            <div class="form-group">
+                <input autocomplete="off" type="text" name="q" class="form-control" value="@q" />
+                <input type="submit" value="Search" />
+            </div>
+        </form>
+    </div>
+</div> *@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OnDate)
+            </th>
+            <th>
+                Room
+            </th>
+            <th>
+                Customer
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OnDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room!.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
